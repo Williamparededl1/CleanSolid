@@ -6,12 +6,31 @@ class Product {
         public size: ProductSize = '',
     ) { }
 
+
+    isProductValid(): boolean {
+
+         for (const key in this) {
+            switch( typeof this[key] ) {
+                case 'string':
+                    if (this[key].length <= 0) throw new Error(`${key} is required`);
+                    break;
+                case 'number':
+                    if (this[key] <= 0) throw new Error(`${key} is zero`);
+                    break;
+                default:
+                    throw new Error(`${typeof this[key]} is not supported`);
+            
+            }
+        }
+
+        return true
+    }
+
     toString() {
 
-        
-        if (this.name.length <= 0) throw new Error('Name is required');
-        if (this.price <= 0) throw new Error('price is zero');
-        if (this.size.length <= 0) throw new Error('Size is required');
+      
+         if (!this.isProductValid()) return;
+       
 
         return `${this.name} ($${this.price}), ${this.size}`;
     }
@@ -23,7 +42,7 @@ class Product {
 
 
     const bluePants =
-        new Product('Blue Large Pants',10, 'M');
+        new Product('Blue Large Pants',0,'XL');
     console.log(bluePants.toString()); // Blue Large Pants
 
 })();
