@@ -1,26 +1,44 @@
 (() =>{
 
 type Genders = 'M' | 'F' ;
+
+interface PersonProperties {
+    name: string;
+    gender: Genders;
+    birthdate: Date;
+}
+
 class Person {
    
-    constructor(
-        public name: string,
-        public gender: Genders, 
-        public birthdate: Date) 
-    {}
+    public name: string;
+    public gender: Genders;
+    public birthdate: Date;
+
+    constructor({name,gender,birthdate}: PersonProperties) {
+        this.name = name;
+        this.gender = gender;
+        this.birthdate = birthdate;
+    }
   
 }
+
+interface UserProperties{
+    email: string;
+    role: string;
+    name: string;
+    gender : Genders;
+    birthdate: Date;
+}
  class User extends Person {
+    public email: string;
+    public role: string;
     public lastAccess: Date;
-    constructor(
-        public email: string,
-        public role: string,
-        name: string,
-        gender: Genders,
-        birthdate: Date
-        )
+
+constructor({email,role,name,gender,birthdate}: UserProperties) 
     {
-       super(name,gender, birthdate);
+        super({name,gender, birthdate});
+        this.email = email;
+        this.role = role;
         this.lastAccess = new Date();
     }
 
@@ -29,28 +47,39 @@ class Person {
     }
  }
 
+interface UserSettingsProperties {
+    workingDirectory:   string;
+    lastOpenFolder:     string;
+    email:              string;
+    role:               string;
+    name:               string;
+    gender:             Genders;
+    birthdate:          Date;
+}
     class UserSettings extends User {
+        public workingDirectory: string;
+        public lastOpenFolder: string;
+
         constructor(
-            public workingDirectory: string,
-            public lastOpenFolder: string,
-            email: string,
-            role: string,
-            name: string,
-            gender: Genders,
-            birthdate: Date
-        ) {
-            super(email, role, name,gender, birthdate);
+        {workingDirectory,lastOpenFolder,email,role,name,gender,birthdate} : UserSettingsProperties) {
+
+            super({email, role,name,gender, birthdate});
+            
+            this.workingDirectory = workingDirectory;
+            this.lastOpenFolder = lastOpenFolder;
            
         }
     }
+
     const userSettings = new UserSettings(
-        '/usr/home',
-        '/home',
-        'wparedesl1995@gmail.com'
-        ,'Admin',
-        'William',
-        'M',
-        new Date('1995-03-10')
+        {
+        workingDirectory : '/usr/home',
+        lastOpenFolder: '/home',
+        email: 'wparedesl1995@gmail.com',
+        role: 'Admin',
+        name:'William',
+        gender :'M',
+        birthdate: new Date('1995-03-10')}
         );
 
     console.log({ userSettings });
