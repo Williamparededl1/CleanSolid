@@ -2,15 +2,7 @@
 
 type Genders = 'M' | 'F' ;
 class Person {
-    // public name: string;
-    // public gender: Genders;
-    // public birthdate: Date;
-
-    // constructor(name: string,gender: Genders, birthdate: Date) {
-    //     this.name = name;
-    //     this.gender= gender;
-    //     this.birthdate = birthdate; 
-    // }
+   
     constructor(
         public name: string,
         public gender: Genders, 
@@ -18,8 +10,49 @@ class Person {
     {}
   
 }
-  const newPerson = new Person('William', 'M', new Date('1995-10-08'));
-    console.log({ newPerson });
+ class User extends Person {
+    public lastAccess: Date;
+    constructor(
+        public email: string,
+        public role: string,
+        name: string,
+        gender: Genders,
+        birthdate: Date
+        )
+    {
+       super(name,gender, birthdate);
+        this.lastAccess = new Date();
+    }
 
+    checkCredentials() {
+        return true;
+    }
+ }
+
+    class UserSettings extends User {
+        constructor(
+            public workingDirectory: string,
+            public lastOpenFolder: string,
+            email: string,
+            role: string,
+            name: string,
+            gender: Genders,
+            birthdate: Date
+        ) {
+            super(email, role, name,gender, birthdate);
+           
+        }
+    }
+    const userSettings = new UserSettings(
+        '/usr/home',
+        '/home',
+        'wparedesl1995@gmail.com'
+        ,'Admin',
+        'William',
+        'M',
+        new Date('1995-03-10')
+        );
+
+    console.log({ userSettings });
 
 })();
